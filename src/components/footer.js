@@ -10,10 +10,13 @@ export default function Footer() {
                     <span>NewsWave | Raj Shimpi</span>
                 </div>
                 <div className="footer-links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
-                    <a href="#">Products</a>
-                    <a href="#">Contact</a>
+                    <a href="/general">General</a>
+                    <a href="/business">Business</a>
+                    <a href="/entertainment">Entertainment</a>
+                    <a href="/health">Health</a>
+                    <a href="/science">Science</a>
+                    <a href="/sports">Sports</a>
+                    <a href="/technology">Technology</a>
                 </div>
                 <div className="footer-social">
                     <a href="https://www.facebook.com/raj.shimpi.798" target="_blank" rel="noopener noreferrer">
