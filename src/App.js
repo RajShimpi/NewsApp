@@ -9,8 +9,8 @@ import Footer from './components/footer';
 
 const App = ()=> {
   const pageSize = 5;
-  // const apiKey = 'b39e4b259a984bdf8176df88ff59888d';
-  const apiKey = process.env.REACT_APP_NEWS_API;
+  const apiKey = 'b39e4b259a984bdf8176df88ff59888d';
+  // const apiKey = process.env.REACT_APP_NEWS_API;
   const [progress, setProgress] = useState(0)
  
     return (
