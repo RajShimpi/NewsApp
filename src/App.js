@@ -21,7 +21,7 @@ const App = ()=> {
         height={3}
         color='#f11946'
         progress={progress} 
-      />
+      /> 
         <Routes>
           <Route exact path="/" element={<News setProgress={setProgress} apiKey={apiKey} key="general" pageSize={pageSize} country="in" category="general"/>} />
           <Route exact path="/general" element={<News setProgress={setProgress} apiKey={apiKey} key="general" pageSize={pageSize} country="in" category="general"/>} />

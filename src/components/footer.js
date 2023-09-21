@@ -26,7 +26,7 @@ export default function Footer() {
                         <i className="fab fa-twitter"></i>
                     </a>
                     <a href="https://www.linkedin.com/in/raj-shimpi-892b8b253/?originalSubdomain=in" target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-linkedin"></i>
+                       <i className="fab fa-linkedin"></i>
                     </a>
                     <a href="https://www.instagram.com/_raj_shimpi/" target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-instagram"></i>
