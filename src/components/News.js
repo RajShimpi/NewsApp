@@ -17,17 +17,21 @@ const News = (props) => {
 const updateNews = async () => {
   props.setProgress(10);
   const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}`;
-  // https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=553d48ed00cf4ec09ee7d77b17768a47
   setLoading(true);
   let data = await fetch(url);
   props.setProgress(30);
   let parsedData = await data.json();
   props.setProgress(70);
-  setArticles(parsedData.articles);
-  setTotalResults(parsedData.totalResults);
+
+  if (parsedData && parsedData.articles) {
+    setArticles(parsedData.articles);
+    setTotalResults(parsedData.totalResults);
+  }
+
   setLoading(false);
   props.setProgress(100);
 };
+
 
   useEffect(() => {
     document.title = `${capitalizeFirstLetter(props.category)} - NewsWave`;
@@ -58,7 +62,7 @@ const updateNews = async () => {
       </h1>
       {loading && <Spinner />}
       <InfiniteScroll
-        dataLength={articles?.length}
+        dataLength={articles?.length || 0}
         next={fetchMoreData}
         hasMore={articles.length !== totalResults}
         loader={<Spinner />}
