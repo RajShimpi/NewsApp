@@ -15,22 +15,38 @@ const News = (props) => {
   };
 
 const updateNews = async () => {
-  props.setProgress(10);
-  const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}`;
-  setLoading(true);
-  let data = await fetch(url);
-  props.setProgress(30);
-  let parsedData = await data.json();
-  props.setProgress(70);
+  try {
+    props.setProgress(10);
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}`;
 
-  if (parsedData && parsedData.articles) {
-    setArticles(parsedData.articles);
-    setTotalResults(parsedData.totalResults);
+    setLoading(true);
+
+    let data = await fetch(url);
+
+    // Check if the response is okay
+    if (!data.ok) {
+      throw new Error(`Error: ${data.status} ${data.statusText}`);
+    }
+
+    props.setProgress(30);
+    let parsedData = await data.json();
+    props.setProgress(70);
+
+    // Ensure parsedData is valid and contains articles
+    if (parsedData && parsedData.articles) {
+      setArticles(parsedData.articles);
+      setTotalResults(parsedData.totalResults);
+    } else {
+      throw new Error("No articles found");
+    }
+  } catch (error) {
+    console.error("Failed to fetch news data:", error);
+  } finally {
+    setLoading(false);
+    props.setProgress(100);
   }
-
-  setLoading(false);
-  props.setProgress(100);
 };
+
 
 
   useEffect(() => {
@@ -39,18 +55,35 @@ const updateNews = async () => {
     // eslint-disable-next-line
   }, []);
 
-  const fetchMoreData = async () => {
+const fetchMoreData = async () => {
+  try {
     const url = `https://newsapi.org/v2/top-headlines?country=${
       props.country
-    }&category=${props.category}&apiKey=${props.apiKey}&page=${page +
-      1}&pageSize=${props.pageSize}`;
-    setPage(page + 1);
+    }&category=${props.category}&apiKey=${props.apiKey}&page=${
+      page + 1
+    }&pageSize=${props.pageSize}`;
+
     let data = await fetch(url);
+
+    // Check if the response is okay
+    if (!data.ok) {
+      throw new Error(`Error: ${data.status} ${data.statusText}`);
+    }
+
     let parsedData = await data.json();
-    console.log(parsedData);
-    setArticles(articles.concat(parsedData.articles));
-    setTotalResults(parsedData.totalResults);
-  };
+
+    // Ensure parsedData is valid and contains articles
+    if (parsedData && parsedData.articles) {
+      setArticles(articles.concat(parsedData.articles));
+      setTotalResults(parsedData.totalResults);
+      setPage(page + 1);
+    } else {
+      throw new Error("No more articles found");
+    }
+  } catch (error) {
+    console.error("Failed to fetch more news data:", error);
+  }
+};
 
   return (
     <>
