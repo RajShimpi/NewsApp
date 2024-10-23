@@ -93,17 +93,50 @@ const News = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  // const fetchMoreData = async () => {
+  //   try {
+  //     // const url = `https://newsapi.org/v2/top-headlines?country=${
+  //     //   props.country
+  //     // }&category=${props.category}&apiKey=${props.apiKey}&page=${
+  //     //   page + 1
+  //     // }&pageSize=${props.pageSize}`;
+  //      const url =
+  //        props.category != "general"
+  //          ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`
+  //          : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}`;
+
+  //     let data = await fetch(url);
+
+  //     // Check if the response is okay
+  //     if (!data.ok) {
+  //       throw new Error(`Error: ${data.status} ${data.statusText}`);
+  //     }
+
+  //     let parsedData = await data.json();
+
+  //     // Ensure parsedData is valid and contains articles
+  //     if (parsedData && parsedData.articles) {
+  //       setArticles(articles.concat(parsedData.articles));
+  //       setTotalResults(parsedData.totalResults);
+  //       setPage(page + 1);
+  //     } else {
+  //       throw new Error("No more articles found");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch more news data:", error);
+  //   }
+  // };
   const fetchMoreData = async () => {
     try {
-      // const url = `https://newsapi.org/v2/top-headlines?country=${
-      //   props.country
-      // }&category=${props.category}&apiKey=${props.apiKey}&page=${
-      //   page + 1
-      // }&pageSize=${props.pageSize}`;
-       const url =
-         props.category != "general"
-           ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`
-           : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}`;
+      // Append page parameter to handle pagination
+      const url =
+        props.category !== "general"
+          ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${
+              props.country
+            }&category=${props.category}&page=${page + 1}`
+          : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${
+              props.country
+            }&page=${page + 1}`;
 
       let data = await fetch(url);
 
@@ -114,11 +147,11 @@ const News = (props) => {
 
       let parsedData = await data.json();
 
-      // Ensure parsedData is valid and contains articles
-      if (parsedData && parsedData.articles) {
-        setArticles(articles.concat(parsedData.articles));
+      // Ensure parsedData is valid and contains results
+      if (parsedData && parsedData.results) {
+        setArticles(articles.concat(parsedData.results));
         setTotalResults(parsedData.totalResults);
-        setPage(page + 1);
+        setPage(page + 1); // Increment page number after fetching more data
       } else {
         throw new Error("No more articles found");
       }
