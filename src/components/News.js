@@ -131,12 +131,8 @@ const News = (props) => {
       // Append page parameter to handle pagination
       const url =
         props.category !== "general"
-          ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${
-              props.country
-            }&category=${props.category}&page=${page + 1}`
-          : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${
-              props.country
-            }&page=${page + 1}`;
+          ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`
+          : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}`;
 
       let data = await fetch(url);
 
