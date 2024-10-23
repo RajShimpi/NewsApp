@@ -95,11 +95,15 @@ const News = (props) => {
 
   const fetchMoreData = async () => {
     try {
-      const url = `https://newsapi.org/v2/top-headlines?country=${
-        props.country
-      }&category=${props.category}&apiKey=${props.apiKey}&page=${
-        page + 1
-      }&pageSize=${props.pageSize}`;
+      // const url = `https://newsapi.org/v2/top-headlines?country=${
+      //   props.country
+      // }&category=${props.category}&apiKey=${props.apiKey}&page=${
+      //   page + 1
+      // }&pageSize=${props.pageSize}`;
+       const url =
+         props.category != "general"
+           ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`
+           : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}`;
 
       let data = await fetch(url);
 
