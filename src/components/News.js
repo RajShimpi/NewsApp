@@ -14,40 +14,78 @@ const News = (props) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-const updateNews = async () => {
-  try {
-    props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}`;
+  // const updateNews = async () => {
+  //   try {
+  //     props.setProgress(10);
+  //     // const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}`;
+  //     const url = `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`;
 
-    setLoading(true);
+  //     setLoading(true);
 
-    let data = await fetch(url);
+  //     let data = await fetch(url);
 
-    // Check if the response is okay
-    if (!data.ok) {
-      throw new Error(`Error: ${data.status} ${data.statusText}`);
+  //     // Check if the response is okay
+  //     if (!data.ok) {
+  //       throw new Error(`Error: ${data.status} ${data.statusText}`);
+  //     }
+
+  //     props.setProgress(30);
+  //     let parsedData = await data.json();
+  //     props.setProgress(70);
+  // console.log(parsedData);
+
+  //     // Ensure parsedData is valid and contains articles
+  //     if (parsedData && parsedData.articles) {
+  //       setArticles(parsedData.articles);
+  //       setTotalResults(parsedData.totalResults);
+  //     } else {
+  //       throw new Error("No articles found");
+  //     }
+  //   } catch (error) {
+  //     console.error("Failed to fetch news data:", error);
+  //   } finally {
+  //     setLoading(false);
+  //     props.setProgress(100);
+  //   }
+  // };
+  const updateNews = async () => {
+    try {
+      console.log(props);
+
+      props.setProgress(10);
+      const url =
+        props.category != "general"
+          ? `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}&category=${props.category}`
+          : `https://newsdata.io/api/1/news?apikey=${props.apiKey}&q=${props.country}`;
+
+      setLoading(true);
+
+      let data = await fetch(url);
+
+      // Check if the response is okay
+      if (!data.ok) {
+        throw new Error(`Error: ${data.status} ${data.statusText}`);
+      }
+
+      props.setProgress(30);
+      let parsedData = await data.json();
+      props.setProgress(70);
+      console.log(parsedData);
+
+      // Ensure parsedData contains results (articles)
+      if (parsedData && parsedData.results) {
+        setArticles(parsedData.results); // Update to use parsedData.results
+        setTotalResults(parsedData.totalResults);
+      } else {
+        throw new Error("No articles found");
+      }
+    } catch (error) {
+      console.error("Failed to fetch news data:", error);
+    } finally {
+      setLoading(false);
+      props.setProgress(100);
     }
-
-    props.setProgress(30);
-    let parsedData = await data.json();
-    props.setProgress(70);
-
-    // Ensure parsedData is valid and contains articles
-    if (parsedData && parsedData.articles) {
-      setArticles(parsedData.articles);
-      setTotalResults(parsedData.totalResults);
-    } else {
-      throw new Error("No articles found");
-    }
-  } catch (error) {
-    console.error("Failed to fetch news data:", error);
-  } finally {
-    setLoading(false);
-    props.setProgress(100);
-  }
-};
-
-
+  };
 
   useEffect(() => {
     document.title = `${capitalizeFirstLetter(props.category)} - NewsWave`;
@@ -55,35 +93,35 @@ const updateNews = async () => {
     // eslint-disable-next-line
   }, []);
 
-const fetchMoreData = async () => {
-  try {
-    const url = `https://newsapi.org/v2/top-headlines?country=${
-      props.country
-    }&category=${props.category}&apiKey=${props.apiKey}&page=${
-      page + 1
-    }&pageSize=${props.pageSize}`;
+  const fetchMoreData = async () => {
+    try {
+      const url = `https://newsapi.org/v2/top-headlines?country=${
+        props.country
+      }&category=${props.category}&apiKey=${props.apiKey}&page=${
+        page + 1
+      }&pageSize=${props.pageSize}`;
 
-    let data = await fetch(url);
+      let data = await fetch(url);
 
-    // Check if the response is okay
-    if (!data.ok) {
-      throw new Error(`Error: ${data.status} ${data.statusText}`);
+      // Check if the response is okay
+      if (!data.ok) {
+        throw new Error(`Error: ${data.status} ${data.statusText}`);
+      }
+
+      let parsedData = await data.json();
+
+      // Ensure parsedData is valid and contains articles
+      if (parsedData && parsedData.articles) {
+        setArticles(articles.concat(parsedData.articles));
+        setTotalResults(parsedData.totalResults);
+        setPage(page + 1);
+      } else {
+        throw new Error("No more articles found");
+      }
+    } catch (error) {
+      console.error("Failed to fetch more news data:", error);
     }
-
-    let parsedData = await data.json();
-
-    // Ensure parsedData is valid and contains articles
-    if (parsedData && parsedData.articles) {
-      setArticles(articles.concat(parsedData.articles));
-      setTotalResults(parsedData.totalResults);
-      setPage(page + 1);
-    } else {
-      throw new Error("No more articles found");
-    }
-  } catch (error) {
-    console.error("Failed to fetch more news data:", error);
-  }
-};
+  };
 
   return (
     <>
@@ -114,15 +152,15 @@ const fetchMoreData = async () => {
                     description={
                       element.description
                         ? element.description.length > 100
-                          ? element.description.slice(0, 100) + "..."
+                          ? element.description.slice(0, 150) + "..."
                           : element.description
                         : ""
                     }
-                    imageUrl={element.urlToImage}
-                    newsUrl={element.url}
-                    author={element.author}
-                    date={element.publishedAt}
-                    source={element.source.name}
+                    imageUrl={element.image_url}
+                    newsUrl={element.link}
+                    author={element.creator}
+                    date={element.pubDate}
+                    source={element.source_name}
                   />
                 </div>
               );

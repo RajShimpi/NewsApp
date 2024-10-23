@@ -10,7 +10,8 @@ import Footer from "./components/footer";
 const App = () => {
   const pageSize = 5;
   // const apiKey = "b39e4b259a984bdf8176df88ff59888d";
-  const apiKey = "553d48ed00cf4ec09ee7d77b17768a47";
+  // const apiKey = "553d48ed00cf4ec09ee7d77b17768a47";
+  const apiKey = "pub_570126bb14b655977237777ae8827c2c9beae";
   // const apiKey = process.env.REACT_APP_NEWS_API;
   const [progress, setProgress] = useState(0);
 
@@ -29,7 +30,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="general"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="general"
               />
             }
@@ -43,7 +44,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="general"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="general"
               />
             }
@@ -57,7 +58,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="business"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="business"
               />
             }
@@ -71,7 +72,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="entertainment"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="entertainment"
               />
             }
@@ -85,7 +86,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="health"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="health"
               />
             }
@@ -99,7 +100,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="science"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="science"
               />
             }
@@ -113,7 +114,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="sports"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="sports"
               />
             }
@@ -127,7 +128,7 @@ const App = () => {
                 apiKey={apiKey}
                 key="technology"
                 pageSize={pageSize}
-                country="us"
+                country="indian"
                 category="technology"
               />
             }

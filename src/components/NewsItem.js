@@ -2,6 +2,8 @@ import React from "react";
 
 const NewsItem = (props) => {
   let { title, description, imageUrl, newsUrl, author, date, source } = props;
+  console.log(title);
+  
   return (
     <div className="my-3">
       <div className="card" style={{ height: "500px", position: "relative" }}>
@@ -38,7 +40,7 @@ const NewsItem = (props) => {
           </h5>
           <p
             className="card-text"
-            style={{ height: "90px", overflow: "hidden" }}
+            style={{ height: "90px"}}
           >
             {description}
           </p>
@@ -56,7 +58,7 @@ const NewsItem = (props) => {
         >
           <p className="card-text">
             <small className="text-muted">
-              By {!author ? "Unknown" : author} on{" "}
+              {/* By {!author ? "Unknown" : author} on{" "} */}
               {new Date(date).toGMTString()}
             </small>
           </p>
