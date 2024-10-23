@@ -2,7 +2,7 @@ import React from "react";
 
 const NewsItem = (props) => {
   let { title, description, imageUrl, newsUrl, author, date, source } = props;
-  console.log(title);
+  // console.log(title);
   
   return (
     <div className="my-3">
